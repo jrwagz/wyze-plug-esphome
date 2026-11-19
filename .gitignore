@@ -1,0 +1,5 @@
+# ESPHome validation artifacts (never commit real credentials)
+tests/secrets.yaml
+.venv/
+.esphome/
+__pycache__/
