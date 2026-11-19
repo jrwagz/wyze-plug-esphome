@@ -1,0 +1,8 @@
+# Test C: button 1 OFF, relay 1 still controllable (the new use case).
+# Button 2 left at defaults (control on, button on).
+packages:
+  plug: !include ../wyze-plug-template.yaml
+
+substitutions:
+  device_name: test-plug-c
+  relay_1_button: false
