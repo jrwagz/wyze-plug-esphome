@@ -10,15 +10,18 @@ Set these as `substitutions:` in the device YAML that includes the template.
 Values must be YAML booleans (`true` / `false`, unquoted) — the quoted
 strings `"true"` / `"false"` are truthy and will not disable anything.
 
-| Parameter         | Required | Default | Meaning                                                  |
-| ----------------- | -------- | ------- | -------------------------------------------------------- |
-| `device_name`     | Yes      | —       | Name of the device                                       |
-| `relay_1_control` | No       | `true`  | Relay 1 controllable from Home Assistant                 |
-| `relay_2_control` | No       | `true`  | Relay 2 controllable from Home Assistant                 |
+| Parameter         | Required | Default | Meaning                                                   |
+| ----------------- | -------- | ------- | --------------------------------------------------------- |
+| `device_name`     | Yes      | —       | Name of the device                                        |
+| `relay_1_control` | No       | `true`  | Relay 1 controllable from Home Assistant                  |
+| `relay_2_control` | No       | `true`  | Relay 2 controllable from Home Assistant                  |
+| `relay_1_button`  | No       | `true`  | Physical button 1 toggles relay 1                         |
+| `relay_2_button`  | No       | `true`  | Physical button 2 toggles relay 2                         |
 
 With control off, the relay is forced on (`ALWAYS_ON`), hidden from Home
-Assistant, and its button does nothing (the press routes to a no-op dummy
-switch).
+Assistant, and its button does nothing. With the button off but control on,
+the relay stays fully controllable from Home Assistant and only the physical
+button is disabled (the press routes to a no-op dummy switch).
 
 ## Usage
 
@@ -31,6 +34,7 @@ packages:
 substitutions:
   device_name: plug-wyze-sidegarage-network
   relay_2_control: false  # single-relay plug
+  relay_1_button: false   # disable the physical button, keep HA control
 ```
 
 The ESPHome dashboard has no git integration, so after changing the template
@@ -46,11 +50,13 @@ Devices using this template:
 ## Validation
 
 `esphome config` resolves the template and its substitution expressions
-without flashing anything. Two test devices in `tests/` cover the behavior:
+without flashing anything. Three test devices in `tests/` cover the behavior:
 
 - `test-a.yaml` — defaults: all relays controllable, both buttons active
 - `test-b.yaml` — relay 1 control off: relay forced on and hidden, button 1
   a no-op
+- `test-c.yaml` — button 1 off: relay 1 still controllable from Home
+  Assistant, physical button 1 disabled
 
 Run locally:
 
