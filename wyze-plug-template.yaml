@@ -2,10 +2,14 @@
 # device_name - REQUIRED (string) : name of device
 # relay_1_control - OPTIONAL (boolean) : Enable control of relay 1 - defaults to true
 # relay_2_control - OPTIONAL (boolean) : Enable control of relay 2 - defaults to true
+# relay_1_button - OPTIONAL (boolean) : Enable physical button 1 - defaults to true
+# relay_2_button - OPTIONAL (boolean) : Enable physical button 2 - defaults to true
 
 substitutions:
   relay_1_control: true
   relay_2_control: true
+  relay_1_button: true
+  relay_2_button: true
   # Higher value gives lower watt readout
   current_res: "0.001"
   # Lower value gives lower voltage readout
@@ -151,7 +155,7 @@ binary_sensor:
       inverted: True
     name: Button1
     on_press:
-      - switch.toggle: ${ "relay1" if relay_1_control else "dummy_relay" }
+      - switch.toggle: ${ "relay1" if relay_1_control and relay_1_button else "dummy_relay" }
   - platform: gpio
     internal: true
     pin:
@@ -160,7 +164,7 @@ binary_sensor:
       inverted: True
     name: Button2
     on_press:
-      - switch.toggle: ${ "relay2" if relay_2_control else "dummy_relay" }
+      - switch.toggle: ${ "relay2" if relay_2_control and relay_2_button else "dummy_relay" }
 
 status_led:
   pin:
