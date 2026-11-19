@@ -1,0 +1,6 @@
+# Test A: default behavior — all relays controllable, both buttons active.
+packages:
+  plug: !include ../wyze-plug-template.yaml
+
+substitutions:
+  device_name: test-plug-a
