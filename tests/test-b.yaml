@@ -1,0 +1,8 @@
+# Test B: relay 1 control OFF — relay forced on and hidden from Home
+# Assistant, button 1 is a no-op.
+packages:
+  plug: !include ../wyze-plug-template.yaml
+
+substitutions:
+  device_name: test-plug-b
+  relay_1_control: false
